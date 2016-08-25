@@ -57,7 +57,14 @@ class Trie(object):
 			parent.add_child(child)
 		self.root.add_child(nodes[-1])
 
-if __name__ == '__main__':
+	def search(self, path):
+		cursor = self.root
+		for key in path:
+			cursor = cursor.children.get(key)
+			if cursor is None: return cursor
+
+
+def top(k):
 	K = 10
 	trie = Trie()
 	for line in sys.stdin:
@@ -77,3 +84,24 @@ if __name__ == '__main__':
 
 	for path, node in buffer.items():
 		print "%s\t%d" % (path.encode('utf8'), node.meta)
+
+def suggestion(k):
+	for line in open(sys.argvp[1]):
+		line = line.rstrip('\n')
+		path, meta = line.split('\t')
+		path = path.decode('utf8')
+		meta = int(meta)
+		trie.insert(path, meta)
+
+	for line in sys.stdin:
+		line = line.rstrip('\n')
+		node = trie.search(line)
+		if node is None:
+			print '%s\t%None' % line
+			continue
+		for node in node.top(k):
+			print '%s\t%s\t%d' % (line, node.path(), node.meta)
+
+if __name__ == '__main__':
+	suggestion(10)
+	
