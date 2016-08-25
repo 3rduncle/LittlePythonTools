@@ -103,7 +103,7 @@ def suggestion(k):
 		line = line.rstrip('\n')
 		node = trie.search(line)
 		if node is None:
-			print '%s\t%None' % line
+			print '%s\tNone' % line
 			continue
 		for node in node.top(k):
 			print '%s\t%s\t%d' % (line, node.path(), node.meta)
