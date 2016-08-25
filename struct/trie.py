@@ -17,8 +17,13 @@ class Node(object):
 			assert hold.key == node.key
 			assert hold.meta is None
 			hold.meta = node.meta
-			hold.children.update(node.children)
+			hold.merge(node)
 		return self
+
+	def merge(self, other):
+		assert self.key == other.key
+		for key, node in other.children.items():
+			self.add_child(node)
 
 	def has_meta(self):
 		return not self.meta is None
@@ -86,7 +91,8 @@ def top(k):
 		print "%s\t%d" % (path.encode('utf8'), node.meta)
 
 def suggestion(k):
-	for line in open(sys.argvp[1]):
+	trie = Trie()
+	for line in open(sys.argv[1]):
 		line = line.rstrip('\n')
 		path, meta = line.split('\t')
 		path = path.decode('utf8')
