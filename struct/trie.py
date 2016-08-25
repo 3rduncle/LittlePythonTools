@@ -76,4 +76,4 @@ if __name__ == '__main__':
 				buffer[path] = leaf
 
 	for path, node in buffer.items():
-		print "%s\t%d" % (path, node.meta)
+		print "%s\t%d" % (path.encode('utf8'), node.meta)
