@@ -15,8 +15,9 @@ class Node(object):
 			 hold.parent = self
 		else:
 			assert hold.key == node.key
-			assert hold.meta is None
-			hold.meta = node.meta
+			assert (hold.meta is None) or (node.meta is None)
+			if hold.meta is None:
+				hold.meta = node.meta
 			hold.merge(node)
 		return self
 
@@ -46,7 +47,7 @@ class Node(object):
 		candidate = []
 		for child in self.children.values():
 			candidate += child.top(k)
-		sorted(candidate, key=lambda x:x.meta, reverse=True)
+		candidate = sorted(candidate, key=lambda x:x.meta, reverse=True)
 		return candidate[0:k]
 	
 class Trie(object):
@@ -67,7 +68,7 @@ class Trie(object):
 		for key in path:
 			cursor = cursor.children.get(key)
 			if cursor is None: return cursor
-
+		return cursor
 
 def top(k):
 	K = 10
