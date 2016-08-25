@@ -61,7 +61,7 @@ if __name__ == '__main__':
 	K = 10
 	trie = Trie()
 	for line in sys.stdin:
-		line = line.rstrip('\t')
+		line = line.rstrip('\n')
 		path, meta = line.split('\t')
 		path = path.decode('utf8')
 		meta = int(meta)
